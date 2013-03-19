@@ -8,3 +8,7 @@ zshenv has some nice builtins. Many surrounding SAS development are going to be
 changing soon.
 
 ctags has support for javascript and php which is really nice.
+
+Also have my .vimrc.local and .vimrc.bundles.local for spf13.
+
+SAS and perl support for Vim and some keymappings.
