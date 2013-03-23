@@ -4,7 +4,7 @@
 #PROMPT="%n@%m %(!.#.$) "    # default prompt
 #RPROMPT=' %3~'     # prompt for right side of screen
 
-export HOST='Stratus'
+export HOST=`hostname`
 
 
 function precmd {
