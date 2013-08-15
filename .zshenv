@@ -133,5 +133,8 @@ export CDPATH=.:~:~/olderic:~/olderic/Projects/
 
 export DISPLAY=localhost:0.0
 
+#export EDITOR=/usr/local/bin/cvim
+export EDITOR=/usr/local/bin/mvim
+
 
 

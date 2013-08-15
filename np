@@ -1,0 +1,95 @@
+#!/bin/zsh
+#
+# Open a new iTerm session in a playpen with several panes.
+# the first of which is cvim on a test program.
+# as argument.
+#
+# original script by Marc Liyanage <http://www.entropy.ch>
+#   designed to work with Mac OSX Terminal.app
+# iTerm modifications by Damon Parker <http://damonparker.org>
+# iTerm2 modifications and Panel modifications by Eric Gebhart <http://ericgebhart.com>
+# 
+# Version 1.2
+# 9/20/2005 damonp - make sure new session opens in current window, clear screen
+# 9/15/2005 damonp - modify for iTerm usage  
+# 7/27/2011 Eric Gebhart - modify for multiple panels & terminal mode macvim in iterm2  
+
+# alias cvim=macvim   will cause macvim to start up in terminal mode.
+VIM_COMMAND="cvim"
+FILE_TO_EDIT="test.*" 
+
+#This is the iterm2 profile name you want to use.
+ITERM_SESSION_NAME="Command"
+
+WCOMMAND="$VIM_COMMAND $FILE_TO_EDIT" 
+
+WD="$1"
+
+
+
+if [[ -d $WD ]];then
+    echo "Creating tab for Project: $WD"
+else
+    echo "No Such Directory: $WD"
+    exit
+fi
+
+
+# This could set the title in the tab for iterm2.
+#ECHO=echo -ne "\e]1;$1\a";
+
+CHDIR="cd $WD;clear\n"
+COMMAND="$CHDIR; $WCOMMAND\n"
+echo "$COMMAND"
+
+osascript 2>/dev/null <<EOF
+    tell application "iTerm"
+        make new terminal
+
+        tell the current terminal
+            activate current session
+
+            -- First window
+
+            launch session "$ITERM_SESSION_NAME"
+            tell the last session
+                write text "$COMMAND " 
+            end tell
+
+
+            -- second window
+
+            tell application "System Events" to keystroke "d" using command down
+            delay 1
+            tell the last session
+                write text "$CHDIR " 
+            end tell
+
+
+            -- Three short windows in the last column.
+
+            tell application "System Events" to keystroke "d" using command down
+            delay 1
+            tell the last session
+                write text "$CHDIR " 
+            end tell
+
+            tell application "System Events" to keystroke "D" using command down
+            delay 1
+            tell the last session
+                write text "$CHDIR " 
+            end tell
+
+            --tell application "System Events" to keystroke "D" using command down
+            --delay 1
+            --tell the last session
+            --    write text "$CHDIR " 
+            --end tell
+
+        end tell
+    end tell
+EOF
+
+exit 0
+
+

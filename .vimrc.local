@@ -217,6 +217,7 @@ highlight cursorline term=underline cterm=underline guibg=#000000
     " }
 
 au BufRead,BufNewFile *.tpl setfiletype=tpl
+autocmd Bufnewfile,Bufread *.m setlocal filetype=octave
 
 py << EOF
 import os.path
