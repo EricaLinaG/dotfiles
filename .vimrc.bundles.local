@@ -1,10 +1,13 @@
 
-Bundle 'vim-scripts/TaskList'
+""Bundle 'vim-scripts/TaskList'
 Bundle 'vim-scripts/vcscommand.vim'
+Bundle 'sjas/octave.vim'
 Bundle 'vim-scripts/svn-diff.vim'
 Bundle 'EricGebhart/SAS-Vim'
 Bundle 'vim-perl/vim-perl'
-Bundle 'sjas/octave.vim'
-
+Bundle 'vim-scripts/paredit.vim'
+Bundle 'tpope/vim-fireplace.git'
+Bundle 'tpope/vim-classpath.git'
+Bundle 'guns/vim-clojure-static.git'
 
 

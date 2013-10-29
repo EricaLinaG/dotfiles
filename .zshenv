@@ -1,5 +1,8 @@
-export DISPLAY=localhost:0.0
+#export DISPLAY=localhost:0.0
+export DISPLAY=:0.0
 export CLICOLOR="YES"
+export BLAS=/usr/local/lib/libfblas.a
+export LAPACK=/usr/local/lib/libflapack.a
 
 bindkey -v
 setopt menucomplete
@@ -127,14 +130,11 @@ fi
 }
 
 export PATH=$PATH:/Library/Frameworks/Python.framework/Versions/3.3/bin:~/bin:/usr/X11R6/bin:/Developer/usr/bin:/usr/local/mysql/bin:/Users/eric/.local/bin
-export PATH=$PATH:/usr/local/Cellar/ruby/1.9.3-p374/bin
+export PATH=$PATH:/usr/local/Cellar/ruby/1.9.3-p374/bin:/usr/local/git/bin
 export CDPATH=.:~:~/olderic:~/olderic/Projects/
 
 
 export DISPLAY=localhost:0.0
-
-#export EDITOR=/usr/local/bin/cvim
-export EDITOR=/usr/local/bin/mvim
 
 
 

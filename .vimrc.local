@@ -3,16 +3,23 @@
 "Colorscheme and colors{
     set t_Co=256
     set background=dark
-    "colorscheme murphy
-    "colorscheme darkblack
-    "colorscheme BlackSea"
-    "colorscheme DarkZen
-    "colorscheme DarkOcean
-    "colorscheme Darkz
-    "colorscheme midnight2
-    colorscheme rdark
+    set cursorline
+    ""colorscheme murphy
+    ""colorscheme darkblack
+    ""colorscheme BlackSea"
+    ""colorscheme DarkZen
+    ""colorscheme DarkOcean
+    ""colorscheme Darkz
+    colorscheme midnight2
+    ""colorscheme rdark
 
-highlight cursorline term=underline cterm=underline guibg=#000000 
+    
+""set cursorline
+"underline is great. But can make variables hard to really see.
+""highlight cursorline term=underline cterm=underline guibg=#000000 
+""hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=white guibg=darkred guifg=white
+""hi CursorLine   cterm=NONE ctermbg=darkred ctermfg=NONE guibg=darkred guifg=NONE
+""hi CursorLine cterm=NONE term=NONE guibg=grey40
 
 "}"
 
@@ -21,6 +28,11 @@ highlight cursorline term=underline cterm=underline guibg=#000000
     set nospell   "Spelling was driving me crazy with underlines and highlighted words."
 
     set smartindent
+
+    "Clojure stuff"
+    let g:paredit_mode = 1
+
+    autocmd BufRead,BufNewFile *.cljs setlocal filetype=clojure
 
     "incremental search, go as you type.
     set incsearch
@@ -217,16 +229,15 @@ highlight cursorline term=underline cterm=underline guibg=#000000
     " }
 
 au BufRead,BufNewFile *.tpl setfiletype=tpl
-autocmd Bufnewfile,Bufread *.m setlocal filetype=octave
 
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py << EOF
+""import os.path
+"import sys
+"import vim
+"if 'VIRTUAL_ENV' in os.environ:
+"    project_base_dir = os.environ['VIRTUAL_ENV']
+"    sys.path.insert(0, project_base_dir)
+"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"    execfile(activate_this, dict(__file__=activate_this))
+"EOF
 
