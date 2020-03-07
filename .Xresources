@@ -1,15 +1,3 @@
-
-this is for 3840x2560 resolution
-!Fonts {{{ 
-Xft.antialias: true
-Xft.hinting:   true
-Xft.rgba:      rgb
-Xft.hintstyle: hintfull
-Xft.dpi:       286
-! }}}
-
-
-Xcursor.size: 64
 URxvt*termName: rxvt-unicode
 URxvt*geometry: 240x90
 URxvt*loginShell: true
