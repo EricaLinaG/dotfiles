@@ -1,5 +1,14 @@
 
-# Setting PATH for Python 3.3
-# The orginal version is saved in .zprofile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.3/bin:/usr/local/bin:${PATH}"
+PATH="/home/eric/bin:/home/eric/.gem/ruby/2.6.0/bin:${PATH}"
 export PATH
+
+export BROWSER=vivaldi-stable
+
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+   # exec startx xmonad.start ## If you wish to be logged out when you exit X.
+   if [ -f ./bin/xmonad.start ]; then
+	   startx ./bin/xmonad.start
+   else
+	   startxfce4
+   fi
+fi

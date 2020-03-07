@@ -1,5 +1,5 @@
 
-/usr/X11R6/bin/xhost +
+#/usr/X11R6/bin/xhost +
 
 # Setup user specific network location specific stuff.
 #if [ -z "$user_net_location" ];then

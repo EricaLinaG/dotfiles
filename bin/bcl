@@ -1,0 +1,1 @@
+bc -l ~/bin/bc/*.bc

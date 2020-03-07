@@ -1,0 +1,11 @@
+
+this is for 3840x2160 resolution
+!Fonts {{{ 
+Xft.antialias: true
+Xft.hinting:   true
+Xft.rgba:      rgb
+Xft.hintstyle: hintfull
+Xft.dpi:       286
+! }}}
+
+Xcursor.size: 64

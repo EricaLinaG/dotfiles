@@ -1,0 +1,1 @@
+lein new re-frame prod-inv-ui +re-com +cider +garden +10x +test
