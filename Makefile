@@ -9,7 +9,7 @@ zsh:
 .PHONY: bin
 bin:
 	mkdir ~/bin
-        cp bin/* ~/bin/
+	cp bin/* ~/bin/
 
 .PHONY: X11
 X11:
