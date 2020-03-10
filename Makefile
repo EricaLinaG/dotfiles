@@ -4,6 +4,7 @@ install: zsh bin X11
 .PHONY: zsh
 zsh:
 	cp .z* ~/         # install zsh dotfiles.
+	cp .ctags ~/      # install ctags config.
 
 .PHONY: bin
 bin:
