@@ -14,6 +14,8 @@ bin:
 .PHONY: X11
 X11:
 	cp .Xresources ~/
+	cp cursor-theme ~/.icons/default/index.theme
+
 
 .PHONY: hidpi
 hidpi:
