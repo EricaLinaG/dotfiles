@@ -15,6 +15,7 @@ bin:
 X11:
 	cp .Xresources ~/
 	cp cursor-theme ~/.icons/default/index.theme
+        touch ~/.Xauthority
 
 
 .PHONY: hidpi
