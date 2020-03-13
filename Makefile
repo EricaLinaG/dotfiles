@@ -14,6 +14,7 @@ bin:
 .PHONY: X11
 X11:
 	cp .Xresources ~/
+        mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
 
