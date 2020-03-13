@@ -14,11 +14,10 @@ bin:
 .PHONY: X11
 X11:
 	cp .Xresources ~/
-        mkdir -p ~/.icons/default
+	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
 
-
 .PHONY: hidpi
 hidpi:
-	cat .Xresources hidpi.txt > ~/.Xresources
+	cat hidpi.txt .Xresources > ~/.Xresources
