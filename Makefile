@@ -17,14 +17,16 @@ X11:
 	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
-─       cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
+	cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 .PHONY: hidpi
 hidpi:
 	cat hidpi.txt .Xresources > ~/.Xresources
 
 .PHONY: enable-anbox
-hidpi:
-        systemctl enable anbox-container-manager.service
+enable-anbox:
+	systemctl enable anbox-container-manager.service
+	mkdir -p /etc/systemd/system/anbox-container-manager.service.d/
 	cp enable-anbox-bridge.conf /etc/systemd/system/anbox-container-manager.service.d/
-        systemctl start anbox-container-manager.service
+	systemctl start anbox-container-manager.service
+	systemctl status anbox-container-manager.service
