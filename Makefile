@@ -17,6 +17,7 @@ X11:
 	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
+─       cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 .PHONY: hidpi
 hidpi:
