@@ -22,3 +22,9 @@ X11:
 .PHONY: hidpi
 hidpi:
 	cat hidpi.txt .Xresources > ~/.Xresources
+
+.PHONY: enable-anbox
+hidpi:
+        systemctl enable anbox-container-manager.service
+	cp enable-anbox-bridge.conf /etc/systemd/system/anbox-container-manager.service.d/
+        systemctl start anbox-container-manager.service
