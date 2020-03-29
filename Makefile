@@ -20,8 +20,9 @@ X11:
 	cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 .PHONY: hidpi
-hidpi:
+hidpi:  zsh
 	cat hidpi.txt .Xresources > ~/.Xresources
+	cat hidpi_env.txt >> ~/.zshenv
 
 .PHONY: enable-anbox
 enable-anbox:
