@@ -1,0 +1,107 @@
+#!/usr/bin/env zsh
+
+# Rotate the screen orientation
+
+help(){
+    print 'rotate-screen - helper for rotating the screen'
+    print ' '
+    print 'Uses xrandr and xsetwacom for the pointers'
+    print 'Tested and used with a Wacom Mobile Studio Pro'
+    print 'To get your devices use the -l option, then'
+    print 'modify this script to suit.'
+    print 'If there is no argument rotation is to landscape'
+    print ' '
+    print ' '
+    print ' -p           Portrait'
+    print ' -l           List devices & ids used'
+    print ' -h           This help text.'
+    print ' '
+    print 'See Also: '
+    print '/https://wiki.archlinux.org/index.php/Tablet_PC#Rotation'
+    print 'http://github.com/EricGebhart/Arch-setup'
+    print ' '
+    exit
+}
+
+# if xrandr doesn't work you may need this
+# in /usr/share/X11/xorg.conf.d/20-screen.conf
+#
+# Section Screen
+#    Option         "RandRRotation" "on"
+# EndSection
+
+
+# For reference...w
+# stylus=`$(${xsetw} | ${awkcommand} "/STYLUS/ $ap")`
+# pad=`xsetwacom list devices | awk -F "id:" "/PAD/ $ap"`
+# touch=`xsetwacom list devices | awk -F "id:" "/TOUCH/ $ap"`
+# eraser=`xsetwacom list devices | awk -F "id:" "/ERASER/ $ap"`
+
+xsw='xsetwacom list devices'
+awkcommand='awk -F "id:" '
+xsetac="xsetwacom list devices | $awkcommand"
+ap='{split (\$2,a,\" \"); print a[1]}'
+
+stylus=$(eval "$xsetac \"/STYLUS/ $ap\"")
+pad=$(eval "$xsetac \"/PAD/ $ap\"")
+touch=$(eval "$xsetac \"/TOUCH/ $ap\"")
+eraser=$(eval "$xsetac \"/ERASER/ $ap\"")
+
+verbose(){
+    print 'Wacom Devices'
+    print '==========================='
+    xsetwacom list devices
+    print '==========================='
+    print ' '
+    print 'using these ids'
+    print '==========================='
+    print "Stylus: $stylus"
+    print "Pad: $pad"
+    print "Touch: $touch"
+    print "Eraser: $eraser"
+    print '==========================='
+}
+
+# $opt will hold the current option
+local opt
+while getopts plh opt; do
+    # loop continues till options finished
+    # see which pattern $opt matches...
+    case $opt in
+        (p)
+            portrait="true"
+            ;;
+        (l)
+            verbose
+            exit
+            ;;
+        (h)
+            help
+            ;;
+	# matches a question mark
+	# (and nothing else, see text)
+        (\?)
+            print "Bad option:" $*
+            print " "
+            help
+            return 1
+            ;;
+    esac
+done
+
+(( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+##print Remaining arguments are: $*
+
+if [[ -v $portrait ]];then
+    xrandr -o 3
+    xsetwacom set $stylus Rotate cw
+    xsetwacom set $touch Rotate cw
+    xsetwacom set $eraser Rotate cw
+
+else
+    ## go to landscape
+    xrandr -o 0
+    xsetwacom set $stylus Rotate none
+    xsetwacom set $touch Rotate none
+    xsetwacom set $eraser Rotate none
+fi

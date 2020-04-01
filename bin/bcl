@@ -1,1 +1,1 @@
-bc -l ~/bin/bc/*.bc
+bc -l ~/bin/bc-extensions/*.bc
