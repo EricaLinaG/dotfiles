@@ -27,7 +27,7 @@ X11:
 	cp termite.conf ~/.config/termite/config
 
 # turn on rotation if it's not on already
-        cp 20-screen.conf /usr/share/X11/xorg.conf.d/
+#	cp 20-screen.conf /usr/share/X11/xorg.conf.d/
 
 .PHONY: hidpi
 hidpi:  zsh
