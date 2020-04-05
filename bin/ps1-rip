@@ -1,0 +1,6 @@
+ps1-into-image $1
+cd ~/psxrip
+zip $1 *
+ls 
+mv $1.zip ~/Arch-Setup/games-setup/ps1.games/
+rm -r *

@@ -1,0 +1,2 @@
+isoinfo -d dev=/dev/sr0 | grep -i -E 'block size|volume size'
+dd if=/dev/sr0 of=ps1.games/TinyTank.iso bs=2048 count=316115

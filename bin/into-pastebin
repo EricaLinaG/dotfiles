@@ -1,0 +1,8 @@
+#!/bin/env /usr/bin/zsh
+file=/tmp/$1
+$0 > ${file}
+curl -F 'f:1=<-' ix.io < $file
+
+# echo $(${0} |& curl -F 'f:1=<-' ix.io)
+# from a file.
+# curl -F 'f:1=<-' ix.io < $1
