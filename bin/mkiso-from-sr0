@@ -1,2 +1,31 @@
-isoinfo -d dev=/dev/sr0 | grep -i -E 'block size|volume size'
-dd if=/dev/sr0 of=ps1.games/TinyTank.iso bs=2048 count=316115
+#!/usr/bin/zsh
+
+device=/dev/sr0
+game_type=ps2
+destdir=~/Arch-Setup/games-setup/games/$game_type
+iso_name=$1.iso
+dest=$destdir/$iso_name
+
+volume_size=`isoinfo -d dev=$device | awk -F': ' '/Volume size/ {print $2}'`
+#volume_size=`$(isoinfo -d dev=$device | awk -F ': ' '{/Volume size/ {print $2}}`
+# block_size=`$(isoinfo -d dev=$device | awk -F ': ' '{/block size/ {print $2}')}`
+block_size=`isoinfo -d dev=$device | awk -F': ' '/block size/ {print $2}'`
+
+
+echo "---------------------------"
+
+isoinfo -d dev=$device
+echo "---------------------------"
+echo " "
+echo " "
+echo "Volume Size: $volume_size"
+echo "Block Size: $block_size"
+echo " "
+echo "Creating $iso_name in $destdir"
+echo " "
+
+# dd if=$device of=$dest bs=2048 count=316115
+
+command="dd if=$device of=$dest bs=$block_size count=$volume_size"
+echo "Executing: $command"
+eval $command
