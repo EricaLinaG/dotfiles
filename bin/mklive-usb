@@ -1,0 +1,46 @@
+#!/usr/bin/env zsh
+
+iso=$1
+dev=$2
+
+help(){
+    print 'mkliveusb <path to iso> <device>'
+    print ' '
+    print 'example:'
+    print 'mkliveusb ArchLinux.iso /dev/sdb'
+    print ' '
+    print 'Use dd to copy an iso image to a device.'
+    print 'Primarily for creating a live usb install image. '
+    print 'for your OS of choice.
+    print ' '
+    print 'Mostly because I don't want to clutter my brain'
+    print ' '
+    print ' -h           This help text.'
+    print ' '
+    exit
+}
+
+
+# $opt will hold the current option
+local opt
+while getopts h opt; do
+    # loop continues till options finished
+    # see which pattern $opt matches...
+    case $opt in
+        (h)
+            help
+            ;;
+	# matches a question mark
+	# (and nothing else, see text)
+        (\?)
+            print "Bad option:" $*
+            print " "
+            help
+            return 1
+            ;;
+    esac
+done
+(( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+
+sudo dd bs=4 if=$iso of=$dev status=progress oflag=sync
+
