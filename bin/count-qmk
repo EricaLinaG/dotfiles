@@ -1,0 +1,119 @@
+#!/usr/bin/zsh
+
+# setup our default values
+###########################
+tmpfile=/tmp/_count_qmk.txt
+lownum=5
+pat='.*'
+
+help(){
+    print 'Count the number of keymaps for each keyboard defined'
+    print 'in the qmk_firmware.'
+    print ' '
+    print 'This is just a little program to count how many custom'
+    print 'keymaps there are for each keyboard in the qmk_firmware'
+    print 'Most people dont seem to write their own, or they keep'
+    print 'them to themselves instead of doing a pull request.'
+    print 'So as data this is probably nothing.'
+    print 'But it is interesting to see the popularity of the keyboards'
+    print 'among those users geeky enough to write a keymap, and also'
+    print 'do a pull request to put into the firmware.'
+    print ' '
+    print ' '
+    print 'Usage:'
+    print 'Run this program from the root of your qmk_firware repo'
+    print ' '
+    print 'count-qmk <options>'
+    print ' '
+    print 'Options:'
+    print ' '
+    print ' -c <number>  Only keyboards with this count or higher. Default is: $lownum'
+    print ' -l <number>  limit output to this number of lines.'
+    print " -r '<regex>' Regex to filter output by. Default is: $pat"
+    print ' -h           This help text.'
+    print ' '
+    print ' '
+    print 'examples:'
+    print ' '
+    print 'To limit the number of records return to the top 20'
+    print 'count-qmk -l 20'
+    print ' '
+    print 'To search for anything beginning with "ky"'
+    print "count-qmk -r 'ky\.\*'"
+    print ' '
+    print 'To search for anything with "keebio" in it.'
+    print "count-qmk -r 'keebio'"
+    print ' '
+    print 'To limit the results to keyboards with more than 10 keymaps.'
+    print "count-qmk -c 10"
+    print ' '
+    print 'Search the keyboard folders for keymap folders'
+    print 'Give a reverse sorted list of keyboards and '
+    print 'their number of keymaps.'
+    print ' '
+    print 'See Also:'
+    print ' '
+    print 'The QMK firmware can be cloned or forked from here.'
+    print 'https://github.com/qmk/qmk_firmware'
+    print ' '
+    exit
+}
+
+
+# $opt will hold the current option
+local opt
+while getopts hl:c:r: opt; do
+    # loop continues till options finished
+    # see which pattern $opt matches...
+    case $opt in
+        (c)
+            lownum=$OPTARG
+            ;;
+        (l)
+            lines='-'$OPTARG
+            ;;
+        (r)
+            pat=$OPTARG
+            ;;
+        (h)
+            help
+            ;;
+	# matches a question mark
+	# (and nothing else, see text)
+        (\?)
+            print "Bad option:" $*
+            print " "
+            help
+            return 1
+            ;;
+    esac
+done
+(( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+
+####################################################################################
+# find the 'keymaps' folders,
+# * do an ls into wc to get a count,
+# * clean up / shorten the names and put it all in a tmpfile
+####################################################################################
+
+rm -f $tmpfile
+for x in $(find . -name "keymaps"); do
+   echo $x `ls $x | wc -l` | sed -e 's,keyboards/,,' -e 's,\./,,' -e 's,/keymaps,,' >> $tmpfile
+done
+
+####################################################################################
+# * cat the tmpfile,
+# * sort it descending by the number field (k2)
+# * use awk to test for the low count threshold
+# * Use sed to search for a regex pattern if given. '.*' otherwise.
+# * if we need a head at the end do that.
+# * cleanup
+####################################################################################
+
+if [[ -n $lines ]];then
+    cat $tmpfile | sort -grk2 | awk -v l=$lownum '{if ($2 >= l) print $0}' | sed -n "/$pat/p" | head $lines
+else
+    cat $tmpfile | sort -grk2 | awk -v l=$lownum '{if ($2 >= l) print $0}' | sed -n "/$pat/p"
+fi
+
+rm -f $tmpfile

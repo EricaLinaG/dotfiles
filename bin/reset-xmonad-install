@@ -1,0 +1,6 @@
+sudo pacman -R Xmonad-setup
+sudo pacman -Qq | grep xmonad | xargs pacman --noconfirm -R
+sudo pacman -Qq | grep ghc | xargs pacman --noconfirm -R
+sudo pacman -Qq | grep haskell | xargs pacman --noconfirm -R
+
+sudo pacman -S xmonad xmonad-contrib ghc

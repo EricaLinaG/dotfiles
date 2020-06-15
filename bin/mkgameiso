@@ -1,0 +1,118 @@
+#!/usr/bin/zsh
+
+device=/dev/sr1
+game_type=ps3
+destdir=~/Arch-Setup/games-setup/games
+iso_name=$1.iso
+dest=$destdir/$iso_name
+
+help(){
+    print 'Makegameiso'
+    print ' '
+    print 'This would work to copy any iso image from a cd/dvd/bluray'
+    print 'I have options here specifically for ripping playstation'
+    print '2 and 3 game discs.  Note that this does not work for PS1 games.'
+    print 'PS1 games are essentially audio CDs with a Data Track.'
+    print ' '
+    print "  The defaults are set to $device and $game_type."
+    print ' '
+    print "  The destination folder defaults to $destdir"
+    print " "
+    print "To change the defaults edit the top of this script"
+    print ' '
+    print 'Usage:'
+    print 'Run this program from the root of your qmk_firware repo'
+    print ' '
+    print 'count-qmk <options>'
+    print ' '
+    print 'Options:'
+    print ' '
+    print " -d <device>  Only keyboards with this count or higher."
+    print "              Default is: ${device}"
+    print ' '
+    print " -g <game>    PS2, PS3 - whatever want the parent folder to be named."
+    print "              Default is: ${game_type}"
+    print ' '
+    print " -p <path>    The destination path, above <game>. The full path will be"
+    print "              This path plus the game option."
+    print "              Default is: ${destdir}"
+    print ' '
+    print ' -h           This help text.'
+    print ' '
+    print ' '
+    print 'examples:'
+    print ' '
+    print 'To rip a ps2 game from /dev/sr0 into <defaultpath>/PS2/KyaDarkLineage.iso'
+    print 'mkgameiso KyaDarkLineage'
+    print ' '
+    print 'To rip a ps3 game into <defaultpath>/PS3/RatchetAndClank.iso'
+    print 'mkgameiso -d /dev/sr1 -g PS3 RatchetAndClank'
+    print ' '
+    print 'To rip a ps3 game from sr1 into destfolder/PS3/RatchetAndClank.iso'
+    print 'mkgameiso -p destfolder -d /dev/sr1 -g PS3 RatchetAndClank'
+    print ' '
+    exit
+}
+
+
+# $opt will hold the current option
+local opt
+while getopts hd:g:p: opt; do
+    # loop continues till options finished
+    # see which pattern $opt matches...
+    case $opt in
+        (d)
+            device=$OPTARG
+            ;;
+        (g)
+            game_type=$OPTARG
+            ;;
+        (p)
+            destdir=$OPTARG
+            ;;
+        (h)
+            help
+            ;;
+	# matches a question mark
+	# (and nothing else, see text)
+        (\?)
+            print "Bad option:" $*
+            print " "
+            help
+            return 1
+            ;;
+    esac
+done
+(( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
+
+# ok. read the disc and get the volume and block size.
+destdir=$destdir/$game_type
+
+mkdir -p destdir
+
+echo "Reading Device $device"
+volume_size=`isoinfo -d dev=$device | awk -F': ' '/Volume size/ {print $2}'`
+#volume_size=`$(isoinfo -d dev=$device | awk -F ': ' '{/Volume size/ {print $2}}`
+# block_size=`$(isoinfo -d dev=$device | awk -F ': ' '{/block size/ {print $2}')}`
+block_size=`isoinfo -d dev=$device | awk -F': ' '/block size/ {print $2}'`
+
+# Be nice and print it out.
+echo "---------------------------"
+
+isoinfo -d dev=$device
+echo "---------------------------"
+echo " "
+echo " "
+echo "Volume Size: $volume_size"
+echo "Block Size: $block_size"
+echo " "
+echo "Creating $iso_name in $destdir"
+echo " "
+
+# copy the disc with dd, eject it when it's done.
+# dd if=$device of=$dest bs=2048 count=316115
+command="dd if=$device of=$dest bs=$block_size count=$volume_size status='progress'"
+echo "Executing: $command"
+eval $command
+
+eject $device
