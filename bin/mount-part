@@ -1,0 +1,1 @@
+sudo mount -o loop,offset=6819938304 ./rk3399-sd-friendlydesktop-bionic-4.4-arm64-20200409.img /mnt/tmp

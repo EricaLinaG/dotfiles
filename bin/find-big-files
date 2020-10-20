@@ -1,0 +1,1 @@
+sudo du -d2 -h $1 | grep G | sort -n

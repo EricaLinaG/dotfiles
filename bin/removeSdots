@@ -1,0 +1,1 @@
+ls s.* | sed 'p;s/s\.*//' | xargs -n2 mv
