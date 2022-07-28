@@ -1,6 +1,5 @@
-
-this is for 3840x2160 resolution
-!Fonts {{{ 
+!this is for 3840x2160 resolution
+!Fonts {{{
 Xft.antialias: true
 Xft.hinting:   true
 Xft.rgba:      rgb

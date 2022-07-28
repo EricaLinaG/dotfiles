@@ -23,7 +23,7 @@ X11:
 	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
 	cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
-	mkdir -p ~/.config/termit
+	mkdir -p ~/.config/termite
 	cp termite.conf ~/.config/termite/config
 
 # turn on rotation if it's not on already
