@@ -1,16 +1,5 @@
 #!/usr/bin/env zsh
 
-# Run emacs as emacsclient or emacs non-client with -c.
-# Evaluate a lisp function on startup for email or a main
-# code window.
-# my main-window lisp function can be found at
-# http://github.com/EricGebhart/xmonad-setup
-# -e runs mu4e and -m runs (main-window).  -m also takes a name
-# which becomes the title of the emacs session.
-# Any startup lisp function can be run with -f.
-# Use -T to add a title,
-# -t to run emacs with no-window 'emacs -nw' in a terminal.
-
 runemacs=`which emacs`
 
 eval_prefix=" --eval '("
@@ -23,25 +12,21 @@ daemon=""
 emacsclient="no"
 email_elisp='mu4e'
 edit_elisp='main-window'
-#  eaf-open (eaf-wrap-url "http://google.com") "browser"
 browser_eval_prefix=' eaf-open-url "'
 browser_eval_suffix='"'
-#  eaf-open (eaf-wrap-url "http://google.com") "browser"
-#  eaf-open-url "http://google.com"
-
-# start daemon with name.
-# emacs -daemon=comm
-# works to open url in new frame.
-# emacsclient -c -s comm -eval '(eaf-open (eaf-wrap-url "http://google.com") "browser" )'
-# works to open files in terminal instance.
-# emacsclient -t -s comm <files ...>
 
 help(){
     print 'emacsn - helper for running emacs'
     print ' '
+    print 'emacsn [options] [files]'
+    print ' '
     print 'Run emacs as emacsclient or emacs non-client'
     print 'with a title, in a terminal or not,'
     print 'and with a lisp evaluation function on startup'
+    print ' '
+    print 'For email, mu4e must be installed. My main-window and eaf-open-url '
+    print 'functions can be found here. '
+    print 'http://github.com/EricGebhart/emacs-setup/elisp/config/functions.el'
     print ' '
     print ' Client/server'
     print ' -c              Use emacsclient'
@@ -60,7 +45,8 @@ help(){
     print ' -w              New window/frame --create-frame. opposite of -t'
     print ' '
     print 'Note: There are functionalities that must be present in emacs in order'
-    print '      to work. Namely: mu4e, eaf-browser, and the elisp functions below.'
+    print '      for some things to work. Namely: mu4e, eaf-browser, and the'
+    print '      main-window and the eaf-open-url elisp functions.'
     print ' '
     print 'Run emacs alone, as a server daemon or emacsclient.'
     print ' '
@@ -89,22 +75,26 @@ help(){
     print '   Using a named emacs server daemon:'
     print '   * Start a server daemon with a name of "common":'
     print '     emacsn -s common'
+    print '   * Start a server daemon running mu4e with a name of "mail" :'
+    print '     emacsn -es mail'
     print ' '
-    print '     Emacs client'
-    print '     * Start a client in new window/frame using a named server:'
-    print '       emacsn -cws common '
-    print '     * Start a client in an existing window/frame using a named server:'
-    print '       emacsn -cs common '
-    print '     * Open an eaf browser on url in an new server window/frame:'
-    print '       emacsn -cws common -b duckduckgo.com'
-    print '     * Open an eaf browser on url in an existing window/frame:'
-    print '       emacsn -cs common -b duckduckgo.com'
-    print '     * Start a split frame session (main-window) in new frame:'
-    print '       emacsn -cw -s common -m MySessionTitle '
-    print '     * Start an mu4e email session. '
-    print '       emacsn -cews common'
-    print '     * Start terminal session. '
-    print '       emacsn -cts common'
+    print '   Emacs client'
+    print '   * Start a client in new window/frame using a named server:'
+    print '     emacsn -cws common '
+    print '   * Start a client in an existing window/frame using a named server:'
+    print '     emacsn -cs common '
+    print '   * Start a client running mu4e in a new window/frame using a named server:'
+    print '     emacsn -ces email '
+    print '   * Open an eaf browser on url in an new client window/frame:'
+    print '     emacsn -cws common -b duckduckgo.com'
+    print '   * Open an eaf browser on url in an existing window/frame:'
+    print '     emacsn -cs common -b duckduckgo.com'
+    print '   * Start a split frame session (main-window) in new frame:'
+    print '     emacsn -cws common -m MySessionTitle '
+    print '   * Start an mu4e email session.'
+    print '     emacsn -cews email'
+    print '   * Start terminal session. '
+    print '     emacsn -cts common'
     print ' '
     print 'Related Elisp code:'
     print ' '
@@ -164,7 +154,7 @@ while getopts cetdhwm:f:T:b:s: opt; do
             runfunc=$eval_prefix$browser_eval_prefix$OPTARG$browser_eval_suffix$eval_suffix
             ;;
         (f)
-            runfunc=$eval_prefix$OPTARG')"'
+            runfunc=$eval_prefix$OPTARG$eval_suffix
             ;;
         (T)
             title=' -T '$OPTARG
