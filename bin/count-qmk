@@ -116,4 +116,4 @@ else
     cat $tmpfile | sort -grk2 | awk -v l=$lownum '{if ($2 >= l) print $0}' | sed -n "/$pat/p"
 fi
 
-rm -f $tmpfile
+# rm -f $tmpfile

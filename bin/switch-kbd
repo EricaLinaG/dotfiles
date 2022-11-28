@@ -2,6 +2,11 @@
 
 # Switch the keyboard to en-us by default, bepo, or en-dvorak.
 
+# get accent characters and dead keys.
+# not sure nodeadkeys really does the right thing.
+#setxkbmap -layout us -variant altgr-intl -option nodeadkeys
+#setxkbmap -layout us -variant intl
+
 help(){
     print 'switch-kbd - helper for setxkbmap'
     print ' '
@@ -9,9 +14,12 @@ help(){
     print 'Uses setxkbmap, so the change only affects the current'
     print 'session.  This mainly to avoid using a toggle key.'
     print ' '
+    print ' -a           altgr International'
     print ' -b           Bepo'
     print ' -d           Dvorak'
+    print ' -i           International'
     print ' -n           do not execute'
+    print ' -v           Print command'
     print ' -h           help text.'
     print ' '
     print ' The default is to set the keyboard to en-us.'
@@ -21,11 +29,11 @@ help(){
 layout="-layout us"
 variant=""
 let "execute = 1"
-let "verose = 0"
+let "verbose = 0"
 
 # $opt will hold the current option
 local opt
-while getopts bdnvh opt; do
+while getopts abdinvh opt; do
     # loop continues till options finished
     # see which pattern $opt matches...
     case $opt in
@@ -38,10 +46,18 @@ while getopts bdnvh opt; do
             layout="-layout en"
             variant="-variant dvorak"
             ;;
-        (n) 
+        (i)
+            layout="-layout us"
+            variant="-variant intl"
+            ;;
+        (a)
+            layout="-layout us"
+            variant="-variant altgr-intl"
+            ;;
+        (n)
             let "execute = 0"
 	    ;;
-        (v) 
+        (v)
             let "verbose = 1"
 	    ;;
         (h)
@@ -60,7 +76,7 @@ done
 (( OPTIND > 1 )) && shift $(( OPTIND - 1 ))
 ##print Remaining arguments are: $*
 
-mycommand='setxkbmap '${layout}' '${variant}
+mycommand='setxkbmap '${layout}' '${variant}' -verbose'
 
 if [[ ( $verbose -ne 0 ) ]]; then;
 	print "setxkbmap Command:" $mycommand

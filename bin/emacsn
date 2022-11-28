@@ -5,6 +5,7 @@ runemacs=`which emacs`
 eval_prefix=" --eval '("
 eval_suffix=")'"
 runfunc=""
+sleep=""
 background=" &"
 title=""
 terminal=""
@@ -24,6 +25,11 @@ help(){
     print 'with a title, in a terminal or not,'
     print 'and with a lisp evaluation function on startup'
     print ' '
+    print 'If starting servers on xinit, it is advisable to add some Sleep time'
+    print 'before startup and to also run it in the background.'
+    print 'Otherwise the server may fail to startup as emacs finishes'
+    print 'before X windows is fully started.'
+    print ' '
     print 'For email, mu4e must be installed. My main-window and eaf-open-url '
     print 'functions can be found here. '
     print 'http://github.com/EricGebhart/emacs-setup/elisp/config/functions.el'
@@ -32,6 +38,7 @@ help(){
     print ' -c              Use emacsclient'
     print ' -s server name  Connect to, or Start, a named daemon'
     print ' -d              Start an unnamed server daemon'
+    print ' -S count        Sleep count seconds before running.'
     print ' '
     print ' Run a lisp function on startup. -e, -m, -b, -f'
     print ' -e              Title it Email and eval mu4e.'
@@ -79,6 +86,8 @@ help(){
     print '       emacsn -s common'
     print '     * Start a server daemon running mu4e with a name of "mail" :'
     print '       emacsn -es mail'
+    print '     * Start a server daemon with a sleep delay of 20 seconds:'
+    print '       emacsn -es mail -S 20'
     print ' '
     print '     Emacs client'
     print '     * Start a client in new window/frame using a named server:'
@@ -126,7 +135,7 @@ help(){
 
 # $opt will hold the current option
 local opt
-while getopts cetdhwm:f:T:b:s: opt; do
+while getopts cetdhwm:f:T:b:s:S: opt; do
     # loop continues till options finished
     # see which pattern $opt matches...
     case $opt in
@@ -139,6 +148,9 @@ while getopts cetdhwm:f:T:b:s: opt; do
         (s)
             daemon="--daemon="$OPTARG
             socket="--socket-name="$OPTARG
+            ;;
+        (S)
+            sleep=$OPTARG
             ;;
         (c)
             runemacs=`which emacsclient`
@@ -192,5 +204,10 @@ fi
 mycommand=$runemacs' '${daemon}' '${terminal}' '${title}' '${*}' '$runfunc' '${background}
 
 print "Emacs With Command:" $mycommand
+
+if [ -n "$sleep"  ]; then
+    # print "Sleeping:" $sleep
+    sleep $sleep
+fi
 
 eval $mycommand
