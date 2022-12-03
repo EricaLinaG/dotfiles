@@ -19,15 +19,14 @@ URxvt*scrollBar: false
 URxvt*scrollBar_right: false
 URxvt*scrollBar_floating: false
 URxvt.transparent:  false
-Urxvt*shading: 20
+! Urxvt*shading: 20
 ! URxvt*background: rgba:0000/0000/0000/cccc
 
-URxvt.fading: 70
+!URxvt.fading: 70
 !URxvt.fadeColor: [0]black
 
 URxvt.saveLines:32767
 
-!URxvt*fading: 50
 URxvt*utmpInhibit: false
 URxvt*urgentOnBell: false
 URxvt*visualBell: true
@@ -38,7 +37,7 @@ URxvt*foreground: White
 URxvt*colorUL: yellow
 URxvt*underlineColor: yellow
 urxvt*depth: 32
-URxvt*background: rgba:0000/0000/0200/c800
+URxvt*background: rgba:0000/0000/0200/08cc
 
 
 !URxvt*font: -xos4-terminus-medium-*-*-*-18-*-*-*-*-*-iso8859-15,xft:terminus:pixelsize:12
@@ -48,10 +47,16 @@ URxvt*background: rgba:0000/0000/0200/c800
 ! this is set in the cosmetic config in emacs.
 !emacs.font: Source\ Code\ Pro-14
        !full name: Source Code Pro:pixelsize=47:foundry=ADBO:weight=normal:slant=normal:width=normal:spacing=100:scalable=true
-URxvt*.boldfont: xft:Source\ Code\ Pro:Bold:size=10
-URxvt*.italicfont: xft:Source\ Code\ Pro:Italaic:size=10
-URxvt*.font: xft:Source\ Code\ Pro:Regular:size=10
-Xterm*.font: xft:Source\ Code\ Pro:Regular:size=10
+
+! URxvt*.boldfont: xft:Source\ Code\ Pro:Bold:size=10
+! URxvt*.italicfont: xft:Source\ Code\ Pro:Italaic:size=10
+! URxvt*.font: xft:Source\ Code\ Pro:Regular:size=10
+
+URxvt*.boldfont: xft:Iosevka:Bold:size=10
+URxvt*.italicfont: xft:Iosevka:Italaic:size=10
+URxvt*.font: xft:Iosevka:Regular:size=10
+
+Xterm*.font: xft:Iosevka:Regular:size=10
 URxvt*buffered: true
 URxvt*hold: false
 URxvt*internalBorder:
