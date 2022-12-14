@@ -8,23 +8,19 @@ zsh:
 
 .PHONY: bin
 bin:
-	mkdir -p ~/bin
-	cp bin/* ~/bin/
+	ln -s bin ~/bin/
 
 .PHONY: X11
 X11:
-	cp .Xresources ~/
+	ln -s .Xresources ~/.Xresources
 
 	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
 
-# Should probably consider just having a .config folder here.
-	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
-	cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
-
-	mkdir -p ~/.config/termite
-	cp termite.conf ~/.config/termite/config
+# # Should probably consider just having a .config folder here.
+# 	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
+# 	cp xfce4-panel.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/
 
 # turn on rotation if it's not on already
 #	cp 20-screen.conf /usr/share/X11/xorg.conf.d/
