@@ -8,11 +8,11 @@ zsh:
 
 .PHONY: bin
 bin:
-	ln -s bin ~/bin/
+	ln -s $(PWD)/bin $(HOME)/bin/
 
 .PHONY: X11
 X11:
-	ln -s .Xresources ~/.Xresources
+	ln -s $(PWD)/.Xresources $(HOME)/.Xresources
 
 	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
