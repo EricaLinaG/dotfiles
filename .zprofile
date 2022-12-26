@@ -1,4 +1,4 @@
-PATH="/home/eric/bin:/home/eric/.gem/ruby/2.6.0/bin:${PATH}"
+PATH="/home/erica/bin:/home/erica/.gem/ruby/2.6.0/bin:${PATH}"
 export PATH
 
 export BROWSER=vivaldi-stable
