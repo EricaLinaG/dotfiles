@@ -1,5 +1,5 @@
 .PHONY: install
-install: zsh bin X11
+install: zsh bin X11 dialog
 
 .PHONY: zsh
 zsh:
@@ -9,6 +9,10 @@ zsh:
 .PHONY: bin
 bin:
 	ln -s $(PWD)/bin $(HOME)/bin/
+
+.PHONY: dialog
+dialog:
+	ln -s $(PWD)/.dialogrc $(HOME)/.dialogrc
 
 .PHONY: X11
 X11:
