@@ -1,18 +1,24 @@
-# if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-#     ssh-agent -t 1h > "$XDG_RUNTIME_DIR/ssh-agent.env"
-# fi
-# if [[ ! -f "$SSH_AUTH_SOCK" ]]; then
-#     source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
-# fi
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt bang_hist
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_fcntl_lock
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_save_no_dups
+setopt hist_verify
+
 
 
 # Set prompts
 
-
 #PROMPT="%n@%m %(!.#.$) "    # default prompt
 #RPROMPT=' %3~'     # prompt for right side of screen
 
-export HOST=`hostname`
+#export HOST=`hostname`
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -35,7 +41,7 @@ function precmd {
     local pwdsize=${#${(%):-%~}}
 
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
-	((PR_PWDLEN=$TERMWIDTH - $promptsize))
+	    ((PR_PWDLEN=$TERMWIDTH - $promptsize))
     else
 	PR_FILLBAR="\${(l.(($TERMWIDTH - ($promptsize + $pwdsize)))..${PR_HBAR}.)}"
     fi
@@ -107,8 +113,8 @@ setprompt () {
 
     case $TERM in
 	xterm*)
-            #PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
-            PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m \a%}'
+        #PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
+        PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m \a%}'
 	    ;;
 	screen)
 	    PR_TITLEBAR=$'%{\e_screen \005 (\005t) | %(!.-=[ROOT]=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\e\\%}'
@@ -158,7 +164,7 @@ $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_NO_COLOUR '
 
     RPROMPT=' $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_HBAR$PR_SHIFT_OUT\
-        #($PR_YELLOW%D{%a,%b%d}$PR_CYAN)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_LRCORNER$PR_SHIFT_OUT$PR_NO_COLOUR'
+#($PR_YELLOW%D{%a,%b%d}$PR_CYAN)$PR_SHIFT_IN$PR_HBAR$PR_CYAN$PR_LRCORNER$PR_SHIFT_OUT$PR_NO_COLOUR'
 
     PS2='$PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT\
 $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT(\
