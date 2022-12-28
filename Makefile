@@ -8,7 +8,7 @@ zsh:
 
 .PHONY: bin
 bin:
-	ln -s $(PWD)/bin $(HOME)/bin/
+	ln -s $(PWD)/bin $(HOME)/bin
 
 .PHONY: dialog
 dialog:
@@ -24,8 +24,8 @@ X11: xresources
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
 
-links:
-	bin xresources dialog
+# make it easy to delete and recreate the links.
+links:  bin xresources dialog
 
 clean-links:
 	rm -f $(HOME)/bin
