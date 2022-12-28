@@ -14,13 +14,23 @@ bin:
 dialog:
 	ln -s $(PWD)/.dialogrc $(HOME)/.dialogrc
 
-.PHONY: X11
-X11:
+.PHONY: xresources
+xresources:
 	ln -s $(PWD)/.Xresources $(HOME)/.Xresources
 
+.PHONY: X11
+X11: xresources
 	mkdir -p ~/.icons/default
 	cp xcursor.theme ~/.icons/default/index.theme
 	touch ~/.Xauthority
+
+links:
+	bin xresources dialog
+
+clean-links:
+	rm -f $(HOME)/bin
+	rm -f $(HOME)/.dialogrc
+	rm -f $(HOME)/.Xresources
 
 # # Should probably consider just having a .config folder here.
 # 	mkdir -p ~/.config/xfce4/xfconf/xfce-perchannel-xml
