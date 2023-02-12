@@ -41,7 +41,7 @@ clean-links:
 
 .PHONY: hidpi
 hidpi:  zsh
-	cat hidpi.txt .Xresources > ~/.Xresources
+	cat hidpi.txt .Xresources > .Xresources
 	cat hidpi_env.txt >> ~/.zshenv
 
 .PHONY: enable-anbox
