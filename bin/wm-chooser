@@ -1,0 +1,27 @@
+#!/bin/zsh
+
+while true
+do
+
+    ### display main menu ###
+    result=$(dialog --stdout --clear  --help-button \
+                    --colors  \
+                    --backtitle "Window Manager or shell" \
+                    --title " Choose UI " \
+                    --menu " Pick your poision" 15 50 4 \
+                    Xmonad    "Xmonad Window manager" \
+                    Exwm      "Emacs Window manager" \
+                    Reboot    "Reboot" \
+                    Shell     "Drop into shell." \
+                    Shutdown  "Shutdown" \
+                    Exit      "Exit to the shell")
+
+    case $result in
+        Xmonad) ssh-agent startx ./xmonad.start;;
+        Exwm)   ssh-agent startx ./exwm.start;;
+        Reboot) reboot;;
+        Shutdown) shutdown now;;
+        Shell)  break;;
+        Exit)   exit; break;;
+    esac
+done

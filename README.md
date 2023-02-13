@@ -12,6 +12,10 @@ There is an additional tweak for hidpi monitors if you do a _make hidpi_
 
 /bin is a directory of shell scripts which install in _~/bin_
 
+The [bc-extensions repo](https://github.com/ericgebhart/bc-extensions.git) 
+has some nice code if you like using the bc calculator. It also installs
+to _~/bin_.
+
 
 Emacs
 -----
@@ -22,7 +26,7 @@ to emacs in front of the _--eval_.
 Use help to see more options.
 I started using this when I realized I wanted my emacs email client separate from my 
 development sessions. It's quite nice to have, try _emacsn -h_ to see what it can do.
-Here are a few examples of what it does.
+Here are a few examples of what it does. It has a lot of help with other options.
 
 * emacsn -h                _=>_  Help!
 * emacsn -e                _=>_ emacs -title "Email" --eval "(mu4e)"
@@ -56,8 +60,13 @@ Where to put stuff.  Or just use make install
 
 Use make
 --------
+This will create links from this repo, so that you can 
+more easily keep track of changes and additions in github,
+by keeping all of your work here.
 
 _make install_
+
+if you have a high dots per inch monitor...
 _make hidpi_
 
 That should do it.

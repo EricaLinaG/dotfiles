@@ -1,10 +1,24 @@
-# Set prompts
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt append_history
+setopt bang_hist
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_fcntl_lock
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_save_no_dups
+setopt hist_verify
 
+
+
+# Set prompts
 
 #PROMPT="%n@%m %(!.#.$) "    # default prompt
 #RPROMPT=' %3~'     # prompt for right side of screen
 
-export HOST=`hostname`
+#export HOST=`hostname`
 
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -18,14 +32,14 @@ function precmd {
 
     ###
     # Truncate the path if it's too long.
-    
+
     PR_FILLBAR=""
     PR_PWDLEN=""
 
-    
+
     local promptsize=${#${(%):--(%n@%m)---()--}}
     local pwdsize=${#${(%):-%~}}
-    
+
     if [[ "$promptsize + $pwdsize" -gt $TERMWIDTH ]]; then
 	    ((PR_PWDLEN=$TERMWIDTH - $promptsize))
     else
@@ -81,7 +95,7 @@ setprompt () {
 
     ###
     # See if we can use extended characters to look nicer.
-    
+
     typeset -A altchar
     set -A altchar ${(s..)terminfo[acsc]}
     PR_SET_CHARSET="%{$terminfo[enacs]%}"
@@ -93,10 +107,10 @@ setprompt () {
     PR_LRCORNER=${altchar[j]:--}
     PR_URCORNER=${altchar[k]:--}
 
-    
+
     ###
     # Decide if we need to set titlebar text.
-    
+
     case $TERM in
 	xterm*)
         #PR_TITLEBAR=$'%{\e]0;%(!.-=*[ROOT]*=- | .)%n@%m:%~ | ${COLUMNS}x${LINES} | %y\a%}'
@@ -109,8 +123,8 @@ setprompt () {
 	    PR_TITLEBAR=''
 	    ;;
     esac
-    
-    
+
+
     ###
     # Decide whether to set a screen title
     if [[ "$TERM" == "screen" ]]; then
@@ -118,11 +132,11 @@ setprompt () {
     else
 	PR_STITLE=''
     fi
-    
-    
+
+
     ###
     # APM detection
-    
+
     if which ibam > /dev/null; then
 	PR_APM='$PR_RED${${PR_APM_RESULT[(f)1]}[(w)-2]}%%(${${PR_APM_RESULT[(f)3]}[(w)-1]})$PR_LIGHT_BLUE:'
     elif which apm > /dev/null; then
@@ -130,8 +144,8 @@ setprompt () {
     else
 	PR_APM=''
     fi
-    
-    
+
+
     ###
     # Finally, the prompt.
 
@@ -159,5 +173,3 @@ $PR_CYAN$PR_SHIFT_IN$PR_HBAR$PR_SHIFT_OUT$PR_NO_COLOUR '
 }
 
 setprompt
-
-
